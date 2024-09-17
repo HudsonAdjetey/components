@@ -124,3 +124,20 @@ select {
     gap: 0.6rem;
 }
 
+.editor::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: rgba(182, 182, 182, 0.5);
+}
+
+.editor {
+    height: 400px;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    padding: 1rem;
+    background-color: white;
+    font-size: 1.2rem;
+    resize: vertical;
+    overflow-y: scroll;
+}
