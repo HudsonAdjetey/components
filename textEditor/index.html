@@ -13,13 +13,16 @@
   <body>
     <div class="container">
       <h1>Text Editor</h1>
-      <div class="toolbar">
-        <!-- UNDO -->
+  <div class="editor_container">
+        <div class="toolbar">
+  <div class="btn_bg" >
+          <!-- UNDO -->
         <button class="action_icons"><i class="bx bx-undo"></i></button>
         <!-- UNDO -->
         <!-- REDO -->
         <button class="action_icons"><i class="bx bx-redo"></i></button>
         <!-- REDO -->
+  </div>
         <!-- Highlight -->
         <button class="action_icons prompt_tools">
           <i class="bx bx-highlight"></i>
@@ -61,7 +64,7 @@
           </button>
         </div>
 
-        <div>
+        <div class="align_format" >
           <button onclick="formatDoc('justifyLeft')">
             <i class="bx bx-align-left"></i>
           </button>
@@ -84,12 +87,17 @@
           <button onclick="formatDoc('unlink')">
             <i class="bx bx-unlink"></i>
           </button>
-          <button id="show-code" data-active="false">&lt;/&gt;</button>
+          <button id="show-code" data-active="false">
+            <i class="bx" >&lt;/&gt;</i>
+          </button>
         </div>
-      </div>
-      <!-- VIEW CONTAINER -->
+        </div>
+        <!-- VIEW CONTAINER -->
       <div class="content_editable" contenteditable="true">lorem</div>
       <!-- VIEW CONTAINER -->
+
     </div>
+    </div>
+  </div>
   </body>
 </html>
