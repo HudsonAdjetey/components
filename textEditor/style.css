@@ -24,7 +24,7 @@ h1 {
 }
 
 .container {
-    max-width: 90%;
+    max-width: 98%;
     width: 100%;
 
 }
@@ -114,3 +114,13 @@ select {
     cursor: pointer;
     font-size: 0.9rem;
 }
+
+.state_changeEvent {
+    margin-top: 3rem;
+    font-size: 0.9rem;
+    color: rgb(37, 197, 250);
+    opacity: 0.5;
+    display: flex;
+    gap: 0.6rem;
+}
+
