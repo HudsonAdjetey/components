@@ -24,7 +24,7 @@ h1 {
 }
 
 .container {
-    max-width: 98%;
+    max-width: 100%;
     width: 100%;
 
 }
@@ -137,7 +137,26 @@ select {
     border-radius: 10px;
     padding: 1rem;
     background-color: white;
-    font-size: 1.2rem;
+    font-size: 1rem;
     resize: vertical;
     overflow-y: scroll;
+    border: none;
+    outline: none;
 }
+
+.header_inputField {
+    margin-block: 2rem;
+    width: 100%;
+    padding: 0.9rem;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+}
+
+.header_inputField:focus,
+.editor:focus {
+
+    border: 1px solid lightblue;
+}
+
