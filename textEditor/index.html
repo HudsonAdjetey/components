@@ -49,16 +49,16 @@
 
         <div class="inner_toolbars">
           <!-- BOLD -->
-          <button><i class="bx bx-bold"></i></button>
+          <button onclick="formatDoc('bold')" ><i class="bx bx-bold"></i></button>
           <!-- BOLD -->
           <button>
-            <i class="bx bx-underline"></i>
+            <i class="bx bx-underline" onclick="formatDoc('underline')" ></i>
           </button>
           <button>
-            <i class="bx bx-italic"></i>
+            <i class="bx bx-italic" onclick="formatDoc('italic')" >  </i>
           </button>
           <button>
-            <i class="bx bx-strikethrough"></i>
+            <i class="bx bx-strikethrough" onclick="formatDoc('strikeThrough')"  ></i>
           </button>
         </div>
 
@@ -75,14 +75,14 @@
           <button onclick="formatDoc('justifyFull')">
             <i class="bx bx-align-justify"></i>
           </button>
-          <button onclick="formatDoc('insertOrderedList')">
+          <button class="insertOrder" onclick="formatDoc('insertOrderedList')">
             <i class="bx bx-list-ol"></i>
           </button>
-          <button onclick="formatDoc('insertUnorderedList')">
+          <button class="insertUnorder" onclick="formatDoc('insertUnorderedList')">
             <i class="bx bx-list-ul"></i>
           </button>
-          <button onclick="addLink()"><i class="bx bx-link"></i></button>
-          <button onclick="formatDoc('unlink')">
+          <button class="link_btn" onclick="addLink()"><i class="bx bx-link"></i></button>
+          <button  onclick="formatDoc('unlink')">
             <i class="bx bx-unlink"></i>
           </button>
           <button id="show-code" data-active="false">

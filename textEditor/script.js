@@ -51,47 +51,6 @@ highlightText();
 
 const getFontFamilySelect = document.querySelector(".select_fonts");
 
-// perform font family selection
-/* 
-FEATURES
-
-- User can select font family from dropdown
-
-- When a font family is selected, it will change the font of the selected text in the document
-
-- The font family will be applied to the currently selected text
-
-- If no text is selected, an alert will be displayed asking the user to select text
-
-- The font family will be applied to the entire document
-
-- The font family will be applied using the execCommand API
-
-
-
-*/
-/* const fontFamilySelect = function () {
-  getFontFamilySelect.addEventListener("change", function (event) {
-    const selectedFont = event.target.value;
-    const selection = window.getSelection();
-    const selectedText = selection.toString();
-    if (!selectedText) {
-      alert("Please select text to apply font family");
-      return;
-    }
-    formatDoc("fontName", selectedFont);
-    console.log(`Font family changed to ${selectedFont}`);
-    // Apply font family to the entire document
-    formatDoc("fontName", selectedFont, document.body);
-    console.log(
-      `Font family changed to ${selectedFont} for the entire document`
-    );
-  });
-};
-
-fontFamilySelect();
- */
-
 const editor = document.getElementsByClassName("editor");
 
 const familySelect = function () {
@@ -110,8 +69,6 @@ const familySelect = function () {
 
     // Clear the selection
     selection.removeAllRanges();
-
-    console.log(`Font family changed to ${getFontFamilySelect.value}`);
   } else {
     // Apply the font family to the entire document
     editor[0].style.fontFamily = getFontFamilySelect.value;
@@ -123,3 +80,107 @@ const familySelect = function () {
 
 // Attach the event listener
 getFontFamilySelect.addEventListener("change", familySelect);
+
+const getUnderlineBtn = document.querySelector(".bx-underline");
+
+const underlineText = function () {
+  const selection = window.getSelection();
+  const selectedText = selection.toString();
+
+  const textSpan = document.createElement("span");
+  textSpan.style.textDecoration = "underline";
+
+  const range = selection.getRangeAt(0);
+
+  // surround the selected text with the span
+  range.surroundContents(textSpan);
+
+  selection.removeAllRanges();
+
+  if (!selectedText) {
+    console.log("No text selected");
+    return;
+  }
+};
+
+const allBtns = document.querySelectorAll("button");
+
+allBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    // Check for the presence of active
+    if (btn.classList.contains("active")) {
+      // If active, remove the active class and change the text
+      btn.classList.remove("active");
+    } else {
+      // If not active, add the active class and change the text
+      btn.classList.add("active");
+    }
+  });
+});
+
+const undoBtn = document.querySelector(".undo");
+const redoBtn = document.querySelector(".redo");
+
+const undoStack = [];
+const redoStack = [];
+
+const applyUndoRedo = function (operation) {
+  // Execute the operation and store the result in the respective stack
+  if (operation === "undo") {
+    redoStack.push(document.execCommand("undo", false, null));
+  } else if (operation === "redo") {
+    undoStack.push(document.execCommand("redo", false, null));
+  }
+};
+
+// create a link
+
+const createLinkBtn = document.querySelector(".bx-link");
+
+const createLink = function () {
+  const selection = window.getSelection();
+  const selectedText = selection.toString();
+
+  if (!selectedText) {
+    console.log("No text selected");
+    return;
+  }
+
+  const input = prompt("Enter the URL for the link:");
+
+  if (!input) {
+    console.log("No URL provided");
+    return;
+  }
+
+  const link = document.createElement("a");
+  link.href = input;
+  link.textContent = selectedText;
+
+  const range = selection.getRangeAt(0);
+
+  // surround the selected text with the link
+  range.surroundContents(link);
+
+  selection.removeAllRanges();
+};
+
+const addLink = function () {
+  const url = prompt("Insert url");
+  formatDoc("createLink", url);
+};
+
+const content = document.querySelector(".editor");
+
+content.addEventListener("mouseenter", function () {
+  const a = content.querySelectorAll("a");
+  a.forEach((item) => {
+    item.addEventListener("mouseenter", function () {
+      content.setAttribute("contenteditable", false);
+      item.target = "_blank";
+    });
+    item.addEventListener("mouseleave", function () {
+      content.setAttribute("contenteditable", true);
+    });
+  });
+});
