@@ -1,86 +1,125 @@
+// Function to apply formatting commands (bold, italic, etc.)
 function formatDoc(cmd, value = null) {
+  console.log(cmd);
   if (value) {
     document.execCommand(cmd, false, value);
   } else {
-    document.execCommand(cmd);
+    document.execCommand(cmd, false, null);
   }
 }
 
-function addLink() {
-  const url = prompt("Insert url");
-  formatDoc("createLink", url);
-}
+const getHighlightPen = document.querySelector(".bx-highlight");
 
-const content = document.getElementById("content");
+const performHighlight = function (isHighlight) {
+  const selection = window.getSelection();
+  const selectedText = selection.toString();
 
-content.addEventListener("mouseenter", function () {
-  const a = content.querySelectorAll("a");
-  a.forEach((item) => {
-    item.addEventListener("mouseenter", function () {
-      content.setAttribute("contenteditable", false);
-      item.target = "_blank";
-    });
-    item.addEventListener("mouseleave", function () {
-      content.setAttribute("contenteditable", true);
-    });
-  });
-});
+  if (!selectedText) {
+    console.log("No text selected");
+    return;
+  }
 
-const showCode = document.getElementById("show-code");
-let active = false;
-
-showCode.addEventListener("click", function () {
-  showCode.dataset.active = !active;
-  active = !active;
-  if (active) {
-    content.textContent = content.innerHTML;
-    content.setAttribute("contenteditable", false);
+  // Apply or remove highlighting
+  if (isHighlight) {
+    formatDoc("hiliteColor", "yellow");
   } else {
-    content.innerHTML = content.textContent;
-    content.setAttribute("contenteditable", true);
+    // Remove highlight (apply transparent to remove the highlight)
+    formatDoc("hiliteColor", "transparent");
   }
-});
+};
 
-const filename = document.getElementById("filename");
+const highlightText = function () {
+  let isHighlightActive = false;
 
-function fileHandle(value, type) {
-  if (value === "new") {
-    content.innerHTML = "";
-    filename.value = "untitled";
-  } else {
-    const url = URL.createObjectURL(value);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  }
-}
-const newBlob = new Blob([content.innerHTML], { type: "text/plain" });
+  getHighlightPen.addEventListener("click", function () {
+    // Toggle the highlight state
+    isHighlightActive = !isHighlightActive;
 
-document
-  .getElementById("fileInput")
-  .addEventListener("change", function (event) {
-    const file = event.target.files[0];
-
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onload = function (e) {
-        insertImage(e.target.result);
-      };
-
-      reader.readAsDataURL(file); // Read the file as a data URL
+    if (isHighlightActive) {
+      performHighlight(true);
+      console.log("Text highlighted");
+    } else {
+      performHighlight(false);
+      console.log("Highlight removed");
     }
   });
+};
 
-function insertImage(src) {
-  const editor = document.getElementById("editor");
-  const img = document.createElement("img");
-  img.src = src;
-  img.alt = "Inserted image";
-  img.style.maxWidth = "100%"; // Optional: Adjust the size as needed
-  editor.appendChild(img);
-}
+highlightText();
+
+// font family selection
+
+const getFontFamilySelect = document.querySelector(".select_fonts");
+
+// perform font family selection
+/* 
+FEATURES
+
+- User can select font family from dropdown
+
+- When a font family is selected, it will change the font of the selected text in the document
+
+- The font family will be applied to the currently selected text
+
+- If no text is selected, an alert will be displayed asking the user to select text
+
+- The font family will be applied to the entire document
+
+- The font family will be applied using the execCommand API
+
+
+
+*/
+/* const fontFamilySelect = function () {
+  getFontFamilySelect.addEventListener("change", function (event) {
+    const selectedFont = event.target.value;
+    const selection = window.getSelection();
+    const selectedText = selection.toString();
+    if (!selectedText) {
+      alert("Please select text to apply font family");
+      return;
+    }
+    formatDoc("fontName", selectedFont);
+    console.log(`Font family changed to ${selectedFont}`);
+    // Apply font family to the entire document
+    formatDoc("fontName", selectedFont, document.body);
+    console.log(
+      `Font family changed to ${selectedFont} for the entire document`
+    );
+  });
+};
+
+fontFamilySelect();
+ */
+
+const editor = document.getElementsByClassName("editor");
+
+const familySelect = function () {
+  const selection = window.getSelection();
+  const selectedText = selection.toString();
+
+  if (selectedText) {
+    const range = selection.getRangeAt(0);
+
+    // Create a new span element to wrap the selected text
+    const selectedTextFamilySpan = document.createElement("span");
+    selectedTextFamilySpan.style.fontFamily = getFontFamilySelect.value;
+
+    // Surround the selected text with the span
+    range.surroundContents(selectedTextFamilySpan);
+
+    // Clear the selection
+    selection.removeAllRanges();
+
+    console.log(`Font family changed to ${getFontFamilySelect.value}`);
+  } else {
+    // Apply the font family to the entire document
+    editor[0].style.fontFamily = getFontFamilySelect.value;
+    console.log(
+      `Font family changed to ${getFontFamilySelect.value} for the entire document`
+    );
+  }
+};
+
+// Attach the event listener
+getFontFamilySelect.addEventListener("change", familySelect);

@@ -160,3 +160,17 @@ select {
     border: 1px solid lightblue;
 }
 
+.file_attachment {
+    margin-top: 2rem;
+}
+
+.file_attachment label {
+    cursor: pointer;
+    width: 120px;
+    height: 20px;
+    padding: .7rem;
+    border-radius: 10px;
+    background-color: rgb(100, 100, 236);
+    color: #fff;
+
+}
