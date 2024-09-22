@@ -184,3 +184,19 @@ content.addEventListener("mouseenter", function () {
     });
   });
 });
+
+const showCode = document.getElementById("show-code");
+let active = false;
+
+showCode.addEventListener("click", function () {
+  showCode.dataset.active = !active;
+  active = !active;
+  console.log(showCode.dataset);
+  if (active) {
+    content.textContent = content.innerHTML;
+    content.setAttribute("contenteditable", false);
+  } else {
+    content.innerHTML = content.textContent;
+    content.setAttribute("contenteditable", true);
+  }
+});
