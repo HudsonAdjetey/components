@@ -393,3 +393,6 @@ eventEmitter.removeListener("click", clickListener);
 
 // Emit an event
 eventEmitter.emit("click", "Hello", "World");
+
+let counter = 1;
+
