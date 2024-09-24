@@ -1,3 +1,5 @@
+"use strict";
+
 class Person {
   constructor(name, age) {
     this.name = name;
@@ -57,8 +59,6 @@ Object.defineProperty(person, "age", {
 });
 
 // Attempting to modify the non-writable property
-person.age = 31; // This will silently fail in non-strict mode
-console.log(person.age); // Outputs: 30
 
 // Defining a property that is not enumerable
 Object.defineProperty(person, "gender", {
@@ -213,7 +213,7 @@ const ParentInfo = {
 };
 
 Object.freeze(ParentInfo);
-ParentInfo.name = "Kevin";
+// ParentInfo.name = "Kevin";
 console.log(ParentInfo.name);
 
 let book = "New complete";
